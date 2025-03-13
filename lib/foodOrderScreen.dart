@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'menuItem.dart';
 
 class FoodOrderScreen extends StatefulWidget {
   const FoodOrderScreen({super.key});
@@ -8,68 +9,130 @@ class FoodOrderScreen extends StatefulWidget {
 }
 
 class FoodOrderScreenState extends State<FoodOrderScreen> {
+  bool hasMemberCard = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Food Order")),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double iconSize = constraints.maxWidth * 0.1;
-          double fontSize = constraints.maxWidth * 0.05;
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Container(
-                        width: iconSize,
-                        height: iconSize,
-                        decoration: const BoxDecoration(
-                          color: Colors.amberAccent,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      title: Text("set",
-                          style: TextStyle(fontSize: fontSize * 0.8)),
-                      subtitle: Text("10 THB/set",
-                          style: TextStyle(fontSize: fontSize * 0.7)),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
+      backgroundColor: Colors.yellow[300],
+      appBar: AppBar(
+        title: const Text(
+          "Menu",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // 2 Column
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.8, // responsive card view
+                ),
+                itemCount: menuItems.length,
+                itemBuilder: (context, index) {
+                  final item = menuItems[index];
+
+                  return Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    color: Colors.blue[300],
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
                         children: [
-                          IconButton(
-                            icon: Icon(Icons.remove, size: fontSize * 0.8),
-                            onPressed: () => {},
+                          // images
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: item.color,
+                              shape: BoxShape.circle,
+                            ),
                           ),
-                          Text("0", style: TextStyle(fontSize: fontSize * 0.8)),
-                          IconButton(
-                            icon: Icon(Icons.add, size: fontSize * 0.8),
-                            onPressed: () => {},
+                          const SizedBox(height: 8),
+                          // set name
+                          Text(
+                            item.set,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          // price
+                          Text(
+                            "${item.price} THB",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const Spacer(),
+                          // + and - order set
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.remove,
+                                  color: Colors.blueAccent,
+                                ),
+                                onPressed: () => {},
+                              ),
+                              const Text(
+                                "0",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              IconButton(
+                                  icon: const Icon(Icons.add,
+                                      color: Colors.blueAccent),
+                                  onPressed: () => {}),
+                            ],
                           ),
                         ],
                       ),
-                    );
-                  },
+                    ),
+                  );
+                },
+              ),
+            ),
+            CheckboxListTile(
+              title: const Text(
+                "Use Member Card \n(10% Discount)",
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
+              value: hasMemberCard,
+              onChanged: (value) {
+                setState(() {
+                  hasMemberCard = value!;
+                });
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                "Total Price: xx THB",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
-              CheckboxListTile(
-                title: Text("Use Member Card (10% Discount)",
-                    style: TextStyle(fontSize: fontSize * 0.8)),
-                value: true,
-                onChanged: (value) {},
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "Total Price: xx THB",
-                  style: TextStyle(
-                      fontSize: fontSize, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          );
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
