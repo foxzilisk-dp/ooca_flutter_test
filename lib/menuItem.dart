@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MenuItem {
-  final String set;
+  final String name;
   final int price;
   final Color color;
 
-  MenuItem(this.set, this.price, this.color);
+  MenuItem(this.name, this.price, this.color);
 }
 
 final List<MenuItem> menuItems = [
