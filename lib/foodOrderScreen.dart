@@ -60,7 +60,7 @@ class FoodOrderScreenState extends State<FoodOrderScreen> {
                           const SizedBox(height: 8),
                           // set name
                           Text(
-                            item.set,
+                            item.name,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
