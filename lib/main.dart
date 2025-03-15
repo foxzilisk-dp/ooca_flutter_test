@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'foodOrderScreen.dart';
+import 'screens/order_screen.dart';
 
 void main() {
-  runApp(const FoodOrderApp());
+  runApp(const OrderApp());
 }
 
-class FoodOrderApp extends StatelessWidget {
-  const FoodOrderApp({super.key});
+class OrderApp extends StatelessWidget {
+  const OrderApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
         primaryColor: Colors.blue,
-        scaffoldBackgroundColor: Colors.yellow,
+        scaffoldBackgroundColor: Colors.yellow.shade700,
       ),
-      debugShowCheckedModeBanner: false, // Disables the debug banner
-      home: const FoodOrderScreen(),
-      // Optionally, define routes here for easier navigation as the app grows.
-      // routes: {
-      //   '/home': (context) => FoodStoreScreen(),
-      //   '/anotherScreen': (context) => AnotherScreen(),
-      // },
+      debugShowCheckedModeBanner: false,
+      home: OrderScreen(),
     );
   }
 }
